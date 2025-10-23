@@ -50,10 +50,10 @@ def mover_servo(canal: str, angulo: float):
 
     if canal == "X":
         servo_x.angle = angulo
-        print(f"[HW] Servo X (canal 5) movido a {angulo:.1f}° (PWM invertido).")
+        print(f"[HW] Servo X (canal 5) movido a {angulo:.1f}°")
     else:
         servo_y.angle = angulo
-        print(f"[HW] Servo Y (canal 4) movido a {angulo:.1f}° (PWM invertido).")
+        print(f"[HW] Servo Y (canal 4) movido a {angulo:.1f}°")
 
 
 # =========================
