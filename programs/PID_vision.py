@@ -66,8 +66,6 @@ color_selected = input("Ingrese un color (R/G/Y): ").strip().upper()
 print("Presione 'q' para salir.")
 
 
-# Variables para el control (no es necesario el "last_sector")
-global CURRENT_ANGLE_X, CURRENT_ANGLE_Y
 
 # Se envía la posición inicial al servidor al inicio.
 enviar_comando_control(f"SET_SERVO:X:{CURRENT_ANGLE_X}")
@@ -168,9 +166,18 @@ while True:
     else:
         # Si no hay objeto, puede detener el movimiento o volver al centro.
         # Por ahora, mantendremos la posición, pero puedes agregar aquí la lógica de centrado.
-        status_text = "Objeto no detectado. Manteniendo posición."
+        status_text = "Objeto no detectado. Centrado"
         cv2.putText(frame, status_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+        
+        # Centrar Servo X solo si no está ya en 90.0
+        if CURRENT_ANGLE_X != 90.0:
+            if enviar_comando_control(f"SET_SERVO:X:90.0"):
+                CURRENT_ANGLE_X = 90.0
 
+        # Centrar Servo Y solo si no está ya en 90.0
+        if CURRENT_ANGLE_Y != 90.0:
+            if enviar_comando_control(f"SET_SERVO:Y:90.0"):
+                CURRENT_ANGLE_Y = 90.0
 
     cv2.imshow("Tracking", frame)
 
