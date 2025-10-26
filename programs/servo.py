@@ -36,7 +36,7 @@ def centrar_servos():
     """Coloca ambos servos en posición neutral (90°)."""
     servo_x.angle = 90
     servo_y.angle = 90
-    print("[HW] Servos centrados en 90° (posición neutral).")
+    print("[HW] Servos centrados (posición neutral).")
 
 
 def mover_servo(canal: str, angulo: float):
