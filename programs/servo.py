@@ -105,10 +105,6 @@ def iniciar_servidor():
         centrar_servos()
         sys.exit(1)
 
-
-# =========================
-# PUNTO DE ENTRADA
-# =========================
 if __name__ == "__main__":
     centrar_servos()
     iniciar_servidor()
