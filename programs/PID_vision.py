@@ -5,12 +5,12 @@ import time # Importar time para el control
 
 SERVER_HOST = "127.0.0.1"
 SERVER_PORT = 8888
-TIMEOUT = 0.5
+TIMEOUT = 0.1
 
 # --- Configuración del Control P ---
 # Ganancias Proporcionales (ajustar según el robot)
-KP_X = 0.05
-KP_Y = 0.05
+KP_X = 0.003
+KP_Y = 0.002
 
 # Rango de ángulo de los servos
 MIN_ANGLE = 45.0
@@ -126,7 +126,7 @@ while True:
 
         # 1. Error: Distancia desde el centroide al centro del frame
         error_x = best_x - center_x
-        error_y = center_y - best_y # Invertir: Y positivo arriba para que +error signifique subir
+        error_y = center_y - best_y 
 
         # 2. Término Proporcional (P)
         # Ajuste = Error * Ganancia (Kp)
@@ -140,7 +140,7 @@ while True:
 
         # 4. Cálculo del nuevo ángulo objetivo
         target_angle_x = CURRENT_ANGLE_X - change_x # Restar porque un +error_x (derecha) debe reducir el ángulo del servo (mover izq)
-        target_angle_y = CURRENT_ANGLE_Y + change_y # Sumar porque un +error_y (arriba) debe aumentar el ángulo del servo (mover arriba)
+        target_angle_y = CURRENT_ANGLE_Y - change_y # Restar porque un -error_y (arriba) debe aumentar el ángulo del servo (mover arriba)
 
         # 5. Restricción del ángulo (Saturación)
         target_angle_x = np.clip(target_angle_x, MIN_ANGLE, MAX_ANGLE)
@@ -168,7 +168,7 @@ while True:
         # Por ahora, mantendremos la posición, pero puedes agregar aquí la lógica de centrado.
         status_text = "Objeto no detectado. Centrado"
         cv2.putText(frame, status_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-        
+
         # Centrar Servo X solo si no está ya en 90.0
         if CURRENT_ANGLE_X != 90.0:
             if enviar_comando_control(f"SET_SERVO:X:90.0"):
